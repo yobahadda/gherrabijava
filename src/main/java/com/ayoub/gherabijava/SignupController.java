@@ -3,7 +3,7 @@ package com.ayoub.gherabijava;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-import static com.ayoub.gherabijava.models.testconnection.connect;
+import static com.ayoub.gherabijava.models.TestConnection.connect;
 
 public class SignupController {
     @FXML

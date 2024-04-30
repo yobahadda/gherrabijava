@@ -9,9 +9,6 @@ public class Client {
     private String Adresse;
     private String email;
     private String telephone;
-
-
-
     public Client(int clientID, String prenom, String nom, String adresse, String email, String telephone) {
         this.ClientID = clientID;
         this.Prenom = prenom;
@@ -21,23 +18,14 @@ public class Client {
         this.telephone = telephone;
     }
     public void insertClient() {
-        String url = "jdbc:mysql://localhost:3306/projetjava";
-        String user = "root";
-        String password = "";
-
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+        try {
+            TestConnection testConnection=new TestConnection();
+            Statement statement =testConnection.getStatement();
             // Corrected SQL query to include all fields and placeholders
-            String sql = "INSERT INTO clients (id, First_name, Fast_name, Email, phone_number) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            // Set the parameters in the same order as they appear in the SQL query
-            statement.setInt(1, ClientID);
-            statement.setString(2, Prenom);
-            statement.setString(3, Nom);
-            statement.setString(4, email);
-            statement.setString(5, telephone);
+            String sql = "INSERT INTO clients (id, First_name, Fast_name, Email, phone_number) VALUES (ClientID,Prenom,Nom,email,telephone)";
+//            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultset = statement.executeQuery(sql);
             // Execute the update
-            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,6 +46,8 @@ public class Client {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static void main(String agrs[]){
     }
 
 }
