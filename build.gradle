@@ -38,6 +38,8 @@ application {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'org.openjfx:javafx-controls:13'
     implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'de.jensd:fontawesomefx:8.9'
+
   }
 
 test {

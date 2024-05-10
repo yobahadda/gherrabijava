@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.SignupController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" stylesheets="@loginDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.SignupController">
 
-    <VBox alignment="CENTER" layoutX="211.0" layoutY="2.0" prefHeight="395.0" prefWidth="177.0" spacing="20" stylesheets="@styles.css">
+    <VBox alignment="CENTER" layoutX="211.0" layoutY="2.0" prefHeight="395.0" prefWidth="177.0" spacing="20" stylesheets="@loginDesign.css">
         <Label prefWidth="94.0" styleClass="label" text="Sign Up" textFill="#461d1d" />
         <TextField fx:id="id" promptText="id" styleClass="text-field" />
         <TextField fx:id="prenomField" promptText="First Name" styleClass="text-field" />

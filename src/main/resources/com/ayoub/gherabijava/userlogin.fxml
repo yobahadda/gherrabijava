@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.HelloConroller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@loginDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.HelloConroller">
 
     <VBox alignment="CENTER" layoutX="225.0" layoutY="117.0" spacing="20">
         <Label styleClass="label" text="Login" />

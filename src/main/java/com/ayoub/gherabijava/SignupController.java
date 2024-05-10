@@ -2,28 +2,19 @@ package com.ayoub.gherabijava;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
-import static com.ayoub.gherabijava.models.TestConnection.connect;
-
 public class SignupController {
     @FXML
     private TextField id;
-
     @FXML
     private TextField prenomField;
-
     @FXML
     private TextField nomField;
-
     @FXML
     private TextField adresseField; // Address
-
     @FXML
     private TextField emailField; // Email
-
     @FXML
     private TextField telephoneField; // Phone Number
-
     @FXML
     private void handleSubmitButtonAction() {
         // This method gets called when the Submit button is clicked
@@ -43,6 +34,6 @@ public class SignupController {
         System.out.println("Address: " + address);
         System.out.println("Email: " + email);
         System.out.println("Phone Number: " + phoneNumber);
-        connect("INSERT INTO clients (ClientID,Prenom,Nom,Addresse,Email,telephone) VALUES (5,firstName,lastName,address,email,phoneNumber)");
+//        connect("INSERT INTO clients (ClientID,Prenom,Nom,Addresse,Email,telephone) VALUES (5,firstName,lastName,address,email,phoneNumber)");
     }
 }
