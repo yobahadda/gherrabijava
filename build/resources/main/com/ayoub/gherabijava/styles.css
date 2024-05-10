@@ -1,0 +1,117 @@
+/* SideBar */
+*{
+    -fx-font-family: "Bricolage Grotesque";
+    -fx-text-fill: #102C57;
+}
+
+.side-bar{
+    -fx-background-color: #E8DFCA;
+}
+
+.admin-name{
+    -fx-font-weight: bold;
+    -fx-font-size: 1.4em;
+}
+
+.side-element{
+    -fx-background-color: #E8DFCA;
+    -fx-text-fill: #102C57;
+}
+
+.side-element:hover{
+    -fx-background-color: #FEFAF6;
+}
+
+.signout-btn{
+    -fx-background-color: #DC6B19;
+    -fx-border-radius: 20;
+    -fx-text-fill: #FFF8DC;
+}
+
+.signout-btn:hover{
+    -fx-background-color: #6C0345;
+}
+
+/* login page */
+.login-btn{
+    -fx-background-color: #EADBC8;
+    -fx-text-fill: #102C57;
+    -fx-font-weight: medium;
+}
+
+.login-btn:hover{
+    -fx-background-color: #DAC0A3;
+    -fx-text-fill: #102C57;
+    -fx-font-weight: medium;
+}
+
+.reset-btn{
+    -fx-background-color: #074173;
+    -fx-text-fill: #EADBC8;
+    -fx-font-weight: medium;
+}
+
+.reset-btn:hover{
+    -fx-background-color: #DAC0A3;
+    -fx-text-fill: #074173;
+    -fx-font-weight: medium;
+}
+
+.forgot-pass-btn{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #DD5746;
+}
+
+/* all pages */
+.page-title{
+    -fx-font-size: 14;
+    -fx-padding: 10;
+}
+
+.ajouter-btn{
+    -fx-background-color: #DAC0A3;
+    -fx-text-fill: #102C57;
+    -fx-font-weight: medium;
+}
+
+.ajouter-btn:hover{
+    -fx-background-color: #DAC0A3;
+}
+
+.ajouter-btn:hover{
+    -fx-background-color: #EADBC8;
+}
+
+.search-bar{
+    -fx-background-color: #FEFAF6;
+    -fx-border-color: #D1BB9E;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.modifier-btn{
+    -fx-background-color: #0E46A3;
+    -fx-text-fill: #E1F7F5;
+}
+
+.modifier-btn:hover{
+    -fx-background-color: #9AC8CD;
+}
+
+.supprimer-btn{
+    -fx-background-color: #8B322C;
+    -fx-text-fill: #FEFAF6;
+}
+
+.supprimer-btn:hover{
+    -fx-background-color: #FFC470;
+}
+
+/* commandes page */
+.input-msg{
+    -fx-text-fill: #D20062;
+}
+
+
+

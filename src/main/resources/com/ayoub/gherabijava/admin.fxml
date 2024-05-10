@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="482.0" prefWidth="652.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.Admin">
+   <children>
+      <ImageView fitHeight="482.0" fitWidth="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/login-img.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="login_form" alignment="CENTER" layoutX="362.0" layoutY="79.0" prefHeight="324.0" prefWidth="255.0" spacing="15.0">
+         <children>
+            <Label text="Login">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="13.0" />
+               </VBox.margin>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="286.0" spacing="15.0">
+               <children>
+                  <Label text="Username:" />
+                  <TextField styleClass="search-bar" />
+                  <Label text="Password:" />
+                  <TextField styleClass="search-bar" />
+                  <Button fx:id="forgot_pass" mnemonicParsing="false" onAction="#showConfirmForm" styleClass="forgot-pass-btn" text="Forgot Your Password?">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </VBox>
+            <Button fx:id="login_btn" mnemonicParsing="false" onAction="#openDashboard" prefHeight="25.0" prefWidth="118.0" styleClass="login-btn" text="Login" />
+         </children>
+      </VBox>
+      <VBox fx:id="confirm_form" alignment="CENTER" layoutX="362.0" layoutY="79.0" prefHeight="324.0" prefWidth="255.0" spacing="15.0" visible="false">
+         <children>
+            <Label text="Confirm Identity">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="13.0" />
+               </VBox.margin>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="286.0" spacing="15.0">
+               <children>
+                  <Label text="Prenom:" />
+                  <TextField styleClass="search-bar" />
+                  <Label text="Nom:" />
+                  <TextField>
+                     <styleClass>
+                        <String fx:value="side-bar" />
+                        <String fx:value="search-bar" />
+                     </styleClass>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </VBox>
+            <Button fx:id="confirm_btn" mnemonicParsing="false" onAction="#showResetForm" prefHeight="25.0" prefWidth="118.0" styleClass="reset-btn" text="Confirm" />
+         </children>
+      </VBox>
+      <VBox fx:id="reset_form" alignment="CENTER" layoutX="372.0" layoutY="89.0" prefHeight="324.0" prefWidth="255.0" spacing="15.0" visible="false">
+         <children>
+            <Label text="Reset Password">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="13.0" />
+               </VBox.margin>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="286.0" spacing="15.0">
+               <children>
+                  <Label text="New Password:" />
+                  <TextField styleClass="search-bar" />
+                  <Label text="Confirm Password:" />
+                  <TextField>
+                     <styleClass>
+                        <String fx:value="side-bar" />
+                        <String fx:value="search-bar" />
+                     </styleClass>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </VBox>
+            <Button fx:id="reset_btn" mnemonicParsing="false" onAction="#showLoginForm" prefHeight="25.0" prefWidth="118.0" styleClass="reset-btn" text="Reset" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
