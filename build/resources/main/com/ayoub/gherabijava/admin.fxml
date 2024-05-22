@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="482.0" prefWidth="652.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.Admin">
+<?import javafx.scene.control.PasswordField?>
+<AnchorPane prefHeight="482.0" prefWidth="652.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.AdminController">
    <children>
       <ImageView fitHeight="482.0" fitWidth="326.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -31,9 +32,9 @@
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="286.0" spacing="15.0">
                <children>
                   <Label text="Username:" />
-                  <TextField styleClass="search-bar" />
+                  <TextField fx:id="usernameField" styleClass="search-bar" />
                   <Label text="Password:" />
-                  <TextField styleClass="search-bar" />
+                  <PasswordField fx:id="passwordField"  styleClass="search-bar" />
                   <Button fx:id="forgot_pass" mnemonicParsing="false" onAction="#showConfirmForm" styleClass="forgot-pass-btn" text="Forgot Your Password?">
                      <font>
                         <Font size="9.0" />

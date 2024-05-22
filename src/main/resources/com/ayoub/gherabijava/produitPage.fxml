@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,22 +22,26 @@
                   <Image url="@images/search.png" />
                </image>
             </ImageView>
-            <TextField prefHeight="25.0" prefWidth="179.0" promptText="search" styleClass="search-bar" />
+            <TextField fx:id="searchField" prefHeight="25.0" prefWidth="179.0" promptText="search" styleClass="search-bar" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <TableView layoutX="14.0" layoutY="102.0" prefHeight="369.0" prefWidth="663.0">
+      <TableView fx:id="produitsTable" layoutX="14.0" layoutY="102.0" prefHeight="369.0" prefWidth="663.0">
          <columns>
-            <TableColumn prefWidth="192.0000057220459" text="Nom" />
-            <TableColumn prefWidth="317.33335876464844" text="Description" />
-            <TableColumn minWidth="6.66668701171875" prefWidth="141.3333740234375" text="Prix" />
+            <TableColumn fx:id="nomColumn" prefWidth="119.19997882843018" text="Nom" />
+            <TableColumn fx:id="descColumn" prefWidth="152.00001525878906" text="Description" />
+            <TableColumn fx:id="prixColumn" prefWidth="124.800048828125" text="Prix" />
+            <TableColumn fx:id="imageColumn" prefWidth="119.199951171875" text="Image" />
+            <TableColumn fx:id="poidsColumn" prefWidth="136.0" text="Poids" />
+            <TableColumn fx:id="quantiteColumn" prefWidth="136.0" text="Quantite" />
+
          </columns>
       </TableView>
       <HBox alignment="CENTER" layoutX="386.0" layoutY="483.0" prefHeight="37.0" prefWidth="177.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="25.0" styleClass="modifier-btn">
+            <Button mnemonicParsing="false" onAction="#modifierProduit" prefHeight="30.0" prefWidth="25.0" styleClass="modifier-btn">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -47,7 +50,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="25.0" styleClass="supprimer-btn">
+            <Button mnemonicParsing="false" onAction="#supprimerProduit" prefHeight="30.0" prefWidth="25.0" styleClass="supprimer-btn">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -56,7 +59,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="25.0" styleClass="ajouter-btn">
+            <Button mnemonicParsing="false" onAction="#ajouterProduit" prefHeight="30.0" prefWidth="25.0" styleClass="ajouter-btn">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,18 +70,28 @@
             </Button>
          </children>
       </HBox>
-      <VBox alignment="CENTER_LEFT" layoutX="698.0" layoutY="101.0" prefHeight="369.0" prefWidth="237.0" spacing="10.0">
+      <VBox alignment="CENTER_LEFT" layoutX="677.0" layoutY="8.0" prefHeight="0.0" prefWidth="266.0" spacing="10.0">
          <children>
             <Label text="Nom Du Produit:" />
-            <TextField prefHeight="30.0" prefWidth="223.0" styleClass="search-bar" />
-            <Label layoutX="10.0" layoutY="24.0" text="Description:" />
-            <TextArea prefHeight="173.0" prefWidth="223.0" styleClass="search-bar" />
-            <Label layoutX="10.0" layoutY="38.0" text="Prix:" />
-            <TextField prefHeight="30.0" styleClass="search-bar" />
+            <TextField fx:id="nomField" prefHeight="30.0" prefWidth="223.0" styleClass="search-bar" />
+            <Label text="Description:" />
+            <TextField fx:id="descField" prefHeight="30.0" styleClass="search-bar" />
+            <Label text="Prix:" />
+            <TextField fx:id="prixField" prefHeight="30.0" styleClass="search-bar" />
+            <Label text="Poids (kg):" />
+            <TextField fx:id="poidsField" prefHeight="30.0" styleClass="search-bar" />
+            <Label text="Quantité en stock:" />
+            <TextField fx:id="quantiteField" prefHeight="30.0" styleClass="search-bar" />
+            <Button onAction="#chooseImage" text="Choose Image" />
+            <ImageView fx:id="imagePreview" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" />
+
          </children>
          <padding>
             <Insets left="7.0" right="7.0" />
          </padding>
       </VBox>
+      <Button layoutX="794.0" layoutY="489.0" mnemonicParsing="false" onAction="#clearFields" styleClass="clear-btn" stylesheets="@styles.css" text="Clear" />
+      <ImageView fx:id="productImageView" fitHeight="68.0" fitWidth="67.0" layoutX="598.0" layoutY="14.0" preserveRatio="true" />
    </children>
+
 </AnchorPane>

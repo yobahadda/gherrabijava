@@ -72,6 +72,21 @@
                         <Insets left="40.0" />
                      </padding>
                   </Button>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="30.0" layoutX="10.0" layoutY="140.0" mnemonicParsing="false" onAction="#openStockPage" prefHeight="45.0" prefWidth="204.0" styleClass="side-element" text="Stock">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/stock.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding>
+                  </Button>
                   <Button alignment="BASELINE_LEFT" graphicTextGap="30.0" layoutX="10.0" layoutY="97.0" mnemonicParsing="false" onAction="#openFacturePage" prefHeight="45.0" prefWidth="204.0" styleClass="side-element" text="Factures">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -102,7 +117,7 @@
                         <Insets left="40.0" />
                      </padding>
                   </Button>
-                  <Button alignment="CENTER" graphicTextGap="10.0" layoutX="10.0" layoutY="180.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" styleClass="signout-btn" text="SignOut">
+                  <Button alignment="CENTER" graphicTextGap="10.0" layoutX="10.0" layoutY="180.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" styleClass="signout-btn" text="SignOut" onAction="#signOut">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -128,6 +143,7 @@
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="569.0" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="clockLabel" layoutX="14" layoutY="14" />
             <Label layoutX="198.0" layoutY="210.0" text="Welcome Hossam">
                <font>
                   <Font name="Bricolage Grotesque Regular" size="18.0" />

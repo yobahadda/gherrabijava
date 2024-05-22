@@ -52,6 +52,13 @@ jlink {
     name = 'app'
   }
 }
+sourceSets {
+  main {
+    resources {
+      srcDirs 'src/main/resources'
+    }
+  }
+}
 
 jlinkZip {
   group = 'distribution'

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="card" prefHeight="146.0" prefWidth="140.0" styleClass="produit-card" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.ProduitCard">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="103.0" fitWidth="214.0" layoutX="19.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/produit.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER" layoutY="121.0" prefHeight="22.0" prefWidth="140.0" spacing="5.0">
+         <children>
+            <Label text="Prix:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="prixProduit" text="0.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="nomProduit" layoutX="52.0" layoutY="101.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

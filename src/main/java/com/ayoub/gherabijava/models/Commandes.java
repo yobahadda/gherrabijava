@@ -1,126 +1,146 @@
 package com.ayoub.gherabijava.models;
-
 import java.sql.*;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
-
 public class Commandes {
-    public int CommandeID;
-    public Date DateCommande;
-    public int ClientID;
-    public String Statut;
+    public int commandeID;
+    private Date dateCommande;
+    private int clientID;
+    private String statut;
+    private List<Lignecommande> ligneCommandes;
+    public float getTotalWeight() {
+        float totalWeight = 0.0f;
+        for (Lignecommande ligne : ligneCommandes) {
+            totalWeight += ligne.getProduit().getPoids() * ligne.getQuantity();
+        }
+        return totalWeight;
+    }
+    public Commandes(Date dateCommande, int clientID, String statut) {
+        this.dateCommande = dateCommande;
+        this.clientID = clientID;
+        this.statut = statut;
+    }
+    public Commandes(int commandeID,Date dateCommande, int clientID, String statut) {
+        this.commandeID = commandeID;
+        this.dateCommande = dateCommande;
+        this.clientID = clientID;
+        this.statut = statut;
+    }
+    public Commandes(int commandeID,Date dateCommande,  String statut) {
+        this.commandeID = commandeID;
+        this.dateCommande = dateCommande;
+        this.statut = statut;
+    }
+    public void updateStatus(String newStatus) {
+        String sql = "UPDATE commandes SET Statut = ? WHERE CommandeID = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, newStatus);
+            statement.setInt(2, this.commandeID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public Commandes(int commandeID, Date dateCommande, int clientID, String statut) {
-        CommandeID = commandeID;
-        DateCommande = dateCommande;
-        ClientID = clientID;
-        Statut = statut;
+    public Commandes() {
+
     }
 
     public int getCommandeID() {
-        return CommandeID;
+        return commandeID;
     }
 
     public void setCommandeID(int commandeID) {
-        CommandeID = commandeID;
+        this.commandeID = commandeID;
     }
 
     public Date getDateCommande() {
-        return DateCommande;
+        return dateCommande;
     }
 
     public void setDateCommande(Date dateCommande) {
-        DateCommande = dateCommande;
+        this.dateCommande = dateCommande;
     }
 
     public int getClientID() {
-        return ClientID;
+        return clientID;
     }
 
     public void setClientID(int clientID) {
-        ClientID = clientID;
+        this.clientID = clientID;
     }
 
     public String getStatut() {
-        return Statut;
+        return statut;
     }
 
     public void setStatut(String statut) {
-        Statut = statut;
-    }
-
-    @Override
-    public String toString() {
-        return "Commandes{" +
-                "CommandeID=" + CommandeID +
-                ", DateCommande=" + DateCommande +
-                ", ClientID=" + ClientID +
-                ", Statut='" + Statut + '\'' +
-                '}';
+        this.statut = statut;
     }
 
     private static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/projetjava";
+        String url = "jdbc:mysql://localhost:3306/projet_java";
         String user = "root";
         String password = "";
         return DriverManager.getConnection(url, user, password);
     }
 
-    public static List<Commandes> getCommandesByClientId(int clientId) {
-        List<Commandes> commandesList = new ArrayList<>();
+    public static Commandes getCommandeById(int commandeId) throws SQLException {
+        Commandes commande = null;
         try (Connection connection = getConnection()) {
-            String sql = "SELECT * FROM commandes WHERE ClientID = ?";
+            String sql = "SELECT * FROM commandes WHERE CommandeID = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, clientId);
+                statement.setInt(1, commandeId);
                 ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    int commandeID = resultSet.getInt("CommandeID");
+                if (resultSet.next()) {
                     Date dateCommande = resultSet.getDate("DateCommande");
-                    int clientIDFromResult = resultSet.getInt("ClientID");
+                    int clientID = resultSet.getInt("ClientID");
                     String statut = resultSet.getString("Statut");
-                    Commandes commande = new Commandes(commandeID, dateCommande, clientIDFromResult, statut);
-                    commandesList.add(commande);
+                    commande = new Commandes(dateCommande, clientID, statut);
+                    commande.setCommandeID(commandeId);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return commandesList;
+        return commande;
     }
+    public int insertCommande(int clientId) {
+        String insertCommandeSql = "INSERT INTO commandes (ClientID, DateCommande) VALUES (?, ?)";
+        int generatedCommandeId = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement insertCommandeStmt = connection.prepareStatement(insertCommandeSql, Statement.RETURN_GENERATED_KEYS)) {
+            // Set the ClientID and DateCommande in the prepared statement
+            insertCommandeStmt.setInt(1, clientId);
+            insertCommandeStmt.setDate(2, this.getDateCommande());
 
-    public void insertCommande() {
-        try (Connection connection = getConnection()) {
-            String sql = "INSERT INTO commandes (DateCommande, ClientID, Statut) VALUES (?, ?, ?)";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setDate(1, this.getDateCommande());
-                statement.setInt(2, this.getClientID());
-                statement.setString(3, this.getStatut());
-                int rowsAffected = statement.executeUpdate();
-                System.out.println("Rows affected: " + rowsAffected);
+            int rowsAffected = insertCommandeStmt.executeUpdate();
+
+            System.out.println("Rows affected by insertCommande: " + rowsAffected);
+
+            if (rowsAffected > 0) {
+                try (ResultSet rs = insertCommandeStmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedCommandeId = rs.getInt(1);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return generatedCommandeId;
     }
 
-    public void deleteCommande() {
+    public void deleteCommande() throws SQLException {
         try (Connection connection = getConnection()) {
             String sql = "DELETE FROM commandes WHERE CommandeID = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, this.getCommandeID());
-                int rowsAffected = statement.executeUpdate();
-                System.out.println("Rows affected: " + rowsAffected);
+                statement.setInt(1, this.commandeID);
+                statement.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        List<Commandes> result = getCommandesByClientId(2);
-        for (Commandes commande : result) {
-            System.out.println(commande);
         }
     }
 }
-

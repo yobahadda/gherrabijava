@@ -6,9 +6,10 @@ public class Lignecommande {
     private int idLigneCommande;
     private int CommandeID;
     private int ID_produit;
+    private Produit produit; // Assuming you have a Produit class
     private int quantite;
     private Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/projetjava";
+        String url = "jdbc:mysql://localhost:3306/projet_java";
         String user = "root";
         String password = "";
         return DriverManager.getConnection(url, user, password);
@@ -98,5 +99,12 @@ public class Lignecommande {
             e.printStackTrace();
         }
         return lignes;
+    }
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public int getQuantity() {
+        return quantite;
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="card" prefHeight="206.0" prefWidth="225.0" styleClass="produit-card" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ayoub.gherabijava.CamionCard">
+   <children>
+      <ImageView fx:id="camionImg" fitHeight="150.0" fitWidth="208.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/red.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="adresseCamion" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="153.0" prefHeight="18.0" prefWidth="217.0" stylesheets="@styles.css" text="label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="poidsCamion" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="178.0" prefHeight="21.0" prefWidth="217.0" stylesheets="@styles.css" text="poids restant : ">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
