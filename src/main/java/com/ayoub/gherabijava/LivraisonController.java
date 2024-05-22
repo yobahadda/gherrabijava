@@ -252,7 +252,6 @@ public class LivraisonController implements Initializable {
                 input = handleDialogBox("invalid input value");
             }
         }
-
         return input.trim();
     }
 
