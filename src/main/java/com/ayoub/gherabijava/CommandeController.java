@@ -1,7 +1,6 @@
 package com.ayoub.gherabijava;
 
 import com.ayoub.gherabijava.models.Commandes;
-import com.ayoub.gherabijava.models.Lignecommande;
 import com.ayoub.gherabijava.models.Produit;
 import com.ayoub.gherabijava.models.ProduitFacture;
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +21,7 @@ import java.util.*;
 
 public class CommandeController implements Initializable {
     final String url = "jdbc:mysql://localhost:3306/projet_java";
-    final String password = "";
+    final String password = "S8!hos@samQl";
     final String user = "root";
     private ObservableList<Commandes> commandes = FXCollections.observableArrayList();
     private ObservableList<ProduitFacture> produitCommande = FXCollections.observableArrayList();
@@ -80,7 +78,7 @@ public class CommandeController implements Initializable {
         newCommande.setStatut("En Attente");
 
         // Insert the new command into the database
-        int newCommandeId = newCommande.insertCommande(clientId);
+        int newCommandeId = newCommande.insertCommande(clientId, password);
 
         // Set the new ID to the command object
         newCommande.setCommandeID(newCommandeId);
@@ -91,53 +89,30 @@ public class CommandeController implements Initializable {
         // Refresh the commandesTable
         commandesTable.refresh();
     }
+
     @FXML
     public void supprimerCommande() throws SQLException {
         Commandes selectedCommande = commandesTable.getSelectionModel().getSelectedItem();
         if (selectedCommande != null) {
-            selectedCommande.deleteCommande();
+            selectedCommande.deleteCommande(password);
             commandes.remove(selectedCommande);
             commandesTable.refresh();
         }
     }
-    public int getIdByName(String productName) {
-        int idProduit = -1;
-        String url = "jdbc:mysql://localhost:3306/projet_java";
-        String user = "root";
-        String password = "";
 
-        String sql = "SELECT ID_produit FROM produit WHERE Nom = ?";
-
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, productName);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                idProduit = resultSet.getInt("ID_produit");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return idProduit;
-    }
     @FXML
     public void confirmProduitTable() {
-        // Get all products from the produitsTable
         ObservableList<ProduitFacture> allProducts = produitsTable.getItems();
 
-        // Check if there are any products
         if (!allProducts.isEmpty()) {
             try (Connection conn = DriverManager.getConnection(url, user, password)) {
                 String sql = "INSERT INTO lignecommande (CommandeID, ID_produit, quantite) VALUES (?, ?, ?)";
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 Commandes selectedCommande = commandesTable.getSelectionModel().getSelectedItem();
+                selectedCommande.updateStatus("pret", password);
 
                 // Check if the CommandeID exists in the commandes table
-                if (Commandes.getCommandeById(selectedCommande.getCommandeID()) != null) {
+                if (Commandes.getCommandeById(selectedCommande.getCommandeID(), password) != null) {
                     // Iterate over all products and insert each one into the database
                     for (ProduitFacture product : allProducts) {
                         pstmt.setInt(1, selectedCommande.getCommandeID());
@@ -157,6 +132,7 @@ public class CommandeController implements Initializable {
                 // Clear the produitsTable
                 produitCommande.clear();
                 produitsTable.refresh();
+                commandesTable.refresh();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -164,6 +140,83 @@ public class CommandeController implements Initializable {
         } else {
             System.out.println("No products to confirm.");
         }
+    }
+
+    @FXML
+    public void supprimerProduit(){
+        ProduitFacture selectedProduct = produitsTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            produitCommande.remove(selectedProduct);
+            produitsTable.refresh();
+        }
+    }
+
+    @FXML
+    public void modifierProduit(){
+        ProduitFacture selectedProduct = produitsTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            int newQuantity = spinnerProduitTable.getValue();
+            selectedProduct.setQuantite(newQuantity);
+            produitsTable.refresh();
+        }
+        spinnerProduitTable.getValueFactory().setValue(1);
+    }
+
+    @FXML
+    public void selectionnerProduitTable(){
+        ProduitFacture selectedProduct = produitsTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            // Display the selected product's details in the nomProduit TextField
+            nomProduit.setText(selectedProduct.getNom() + " : " + selectedProduct.getMontant() + " DH");
+            // Set the value of the spinnerProduitTable to the selected product's quantity
+            spinnerProduitTable.getValueFactory().setValue(selectedProduct.getQuantite());
+        } else {
+            System.out.println("No product selected.");
+        }
+    }
+
+    @FXML
+    private void selectionnerCommande(){
+        produitsTable.getItems().clear();
+        Commandes selectedCommande = commandesTable.getSelectionModel().getSelectedItem();
+        getProduitsCommande(selectedCommande.getCommandeID());
+        showProduitCommande();
+    }
+
+    @FXML
+    public void ajouterProduitTable(){
+        int quantite = spinnerProduitList.getValue();
+        String[] parts = nomProduit.getText().split(" : ");
+        String nom = parts[0];
+        float prix = Float.parseFloat(parts[1].replace(" DH",""));
+        int produitId = getIdByName(nom); // Get the product ID from the product name
+        ProduitFacture newProduct = new ProduitFacture(nom, quantite, prix);
+        newProduct.setProduitID(produitId); // Set the product ID to the ProduitFacture object
+        produitCommande.add(newProduct);
+        produitsTable.refresh();
+        spinnerProduitList.getValueFactory().setValue(1);
+        nomProduit.setText("");
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        spinnerProduitList.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
+        spinnerProduitTable.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
+        String clientEmail = handleDialogBox("Email Du Client");
+        showProduits();
+        commandesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                produitCommande.clear();
+                getProduitsCommande(newSelection.getCommandeID());
+                showProduitCommande();
+            }
+        });
+        if(clientEmail != ""){
+            getClientId(clientEmail);
+            pageTitle.setText("Les Commandes de "+getClientName());
+            getCommandesFromDb();
+        }
+        showCommandes();
     }
 
     private List<Produit> getAllNewItems() {
@@ -196,78 +249,26 @@ public class CommandeController implements Initializable {
 
         return newItems;
     }
-    public void ajouterProduitTable(){
-        int quantite = spinnerProduitList.getValue();
-        String[] parts = nomProduit.getText().split(" : ");
-        String nom = parts[0];
-        float prix = Float.parseFloat(parts[1].replace(" DH",""));
-        int produitId = getIdByName(nom); // Get the product ID from the product name
-        ProduitFacture newProduct = new ProduitFacture(nom, quantite, prix);
-        newProduct.setProduitID(produitId); // Set the product ID to the ProduitFacture object
-        if (newProduct != null) {
-            produitCommande.add(newProduct);
-            produitsTable.refresh();
-        }
-        spinnerProduitList.getValueFactory().setValue(1);
-        nomProduit.setText("");
-    }
-    @FXML
-    public void supprimerProduit(){
-        ProduitFacture selectedProduct = produitsTable.getSelectionModel().getSelectedItem();
-        if (selectedProduct != null) {
-            produitCommande.remove(selectedProduct);
-            produitsTable.refresh();
-        }
-    }
-    @FXML
-    public void modifierProduit(){
-        ProduitFacture selectedProduct = produitsTable.getSelectionModel().getSelectedItem();
-        if (selectedProduct != null) {
-            int newQuantity = spinnerProduitTable.getValue();
-            selectedProduct.setQuantite(newQuantity);
-            produitsTable.refresh();
-        }
-        spinnerProduitTable.getValueFactory().setValue(1);
-    }
-    @FXML
-    public void selectionnerProduitTable(){
-        ProduitFacture selectedProduct = produitsTable.getSelectionModel().getSelectedItem();
-        if (selectedProduct != null) {
-            // Display the selected product's details in the nomProduit TextField
-            nomProduit.setText(selectedProduct.getNom() + " : " + selectedProduct.getMontant() + " DH");
-            // Set the value of the spinnerProduitTable to the selected product's quantity
-            spinnerProduitTable.getValueFactory().setValue(selectedProduct.getQuantite());
-        } else {
-            System.out.println("No product selected.");
-        }
-    }
-    @FXML
-    private void selectionnerCommande(){
-        produitsTable.getItems().clear();
-        Commandes selectedCommande = commandesTable.getSelectionModel().getSelectedItem();
-        getProduitsCommande(selectedCommande.getCommandeID());
-        showProduitCommande();
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
-        spinnerProduitList.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
-        spinnerProduitTable.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
-        String clientEmail = handleDialogBox("Email Du Client");
-        showProduits();
-        commandesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                produitCommande.clear();
-                getProduitsCommande(newSelection.getCommandeID());
-                showProduitCommande();
+    public int getIdByName(String productName) {
+        int idProduit = -1;
+        String sql = "SELECT ID_produit FROM produit WHERE Nom = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, productName);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                idProduit = resultSet.getInt("ID_produit");
             }
-        });
-        if(clientEmail != ""){
-            getClientId(clientEmail);
-            pageTitle.setText("Les Commandes de "+getClientName());
-            getCommandesFromDb();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        showCommandes();
+
+        return idProduit;
     }
 
     public void workCardData(String nom, float prix){
@@ -361,6 +362,7 @@ public class CommandeController implements Initializable {
             e.printStackTrace();
         }
     }
+
     private String getNomProduit(int produitId){
         String sql = "select Nom from produit where ID_produit = ?";
         String nom = "";

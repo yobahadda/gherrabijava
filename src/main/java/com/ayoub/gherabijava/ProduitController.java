@@ -22,10 +22,10 @@ import java.util.ResourceBundle;
 
 
 public class ProduitController implements Initializable {
-
     private static final String DB_URL = "jdbc:mysql://localhost:3306/projet_java";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "S8!hos@samQl";
+
     @FXML
     private TextField searchField;
     @FXML private ImageView imagePreview;
@@ -38,8 +38,8 @@ public class ProduitController implements Initializable {
     @FXML private ImageView productImageView;
     private ObservableList<Produit> produits = FXCollections.observableArrayList();
     private FilteredList<Produit> filteredProducts;
-
     private File selectedImageFile;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configureTableColumns();
@@ -52,6 +52,7 @@ public class ProduitController implements Initializable {
             }
         });
     }
+
     private void populateFields(Produit selectedProduct) {
         nomField.setText(selectedProduct.getNom());
         descField.setText(selectedProduct.getDescription());
@@ -59,6 +60,7 @@ public class ProduitController implements Initializable {
         poidsField.setText(String.valueOf(selectedProduct.getPoids()));
         quantiteField.setText(String.valueOf(selectedProduct.getQuantiteStock()));
     }
+
     private void filterProducts(String searchText) {
         filteredProducts.setPredicate(product -> {
             if (searchText == null || searchText.isEmpty()) return true;
@@ -68,8 +70,8 @@ public class ProduitController implements Initializable {
             return false;
         });
     }
-    @FXML
 
+    @FXML
     private void updateImageView(Produit selectedProduct) {
         if (selectedProduct != null) {
             String imagePath = selectedProduct.getImagePath();
@@ -90,10 +92,11 @@ public class ProduitController implements Initializable {
             productImageView.setImage(null);
         }
     }
+
     private Connection getConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/projet_java";
         String user = "root";
-        String password = "";
+        String password = "S8!hos@samQl";
         return DriverManager.getConnection(url, user, password);
     }
 
@@ -105,6 +108,7 @@ public class ProduitController implements Initializable {
         quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantiteStock"));
         produitsTable.setItems(produits);
     }
+
     private void loadProduits() {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = conn.createStatement();
@@ -124,6 +128,7 @@ public class ProduitController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Problem loading products: " + ex.getMessage());
         }
     }
+
     @FXML
     private void chooseImage() {
         FileChooser fileChooser = new FileChooser();
@@ -135,6 +140,7 @@ public class ProduitController implements Initializable {
             imagePreview.setImage(new Image(selectedImageFile.toURI().toString()));
         }
     }
+
     @FXML
     private void ajouterProduit() {
         if (selectedImageFile != null) {

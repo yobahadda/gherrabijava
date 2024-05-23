@@ -36,7 +36,7 @@
                 <TableColumn fx:id="montantColumn" prefWidth="140.6666259765625" text="Montant" />
             </columns>
         </TableView>
-        <Button layoutX="445.0" layoutY="287.0" mnemonicParsing="false" onAction="#generatePdfFile" prefHeight="30.0" prefWidth="83.0" styleClass="modifier-btn" text="generate" />
+        <Button layoutX="439.0" layoutY="287.0" mnemonicParsing="false" onAction="#generatePdfFile" prefHeight="30.0" prefWidth="95.0" styleClass="modifier-btn" text="generate PDF" />
         <Pane layoutX="548.0" layoutY="167.0" prefHeight="344.0" prefWidth="387.0" style="-fx-background-color: #ffb220;">
             <children>
                 <TextArea fx:id="bonneDeLivraisonTextArea" editable="false" layoutX="10.0" layoutY="9.0" prefHeight="326.0" prefWidth="367.0" promptText="Generated bonne de livraison will appear here..." wrapText="true" />
@@ -49,13 +49,14 @@
                 <TableColumn fx:id="statusColumn" prefWidth="105.99993896484375" text="Status" />
             </columns>
         </TableView>
-        <TableView fx:id="factureTable" layoutX="567.0" layoutY="102.0" onMouseClicked="#selectionnerFacture" prefHeight="59.0" prefWidth="350.0">
+        <TableView fx:id="factureTable" layoutX="548.0" layoutY="102.0" onMouseClicked="#selectionnerFacture" prefHeight="59.0" prefWidth="387.0">
             <columns>
-                <TableColumn fx:id="comFactureColumn" prefWidth="105.33331298828125" text="CommandeID" />
-                <TableColumn fx:id="totalColumn" prefWidth="112.66668701171875" text="Montant Total" />
-                <TableColumn fx:id="dateFactureColumn" prefWidth="118.66668701171875" text="Date Facture" />
+                <TableColumn fx:id="comFactureColumn" prefWidth="82.66668701171875" text="CommandeID" />
+                <TableColumn fx:id="totalColumn" prefWidth="95.33331298828125" text="Montant Total" />
+            <TableColumn fx:id="poidsColumn" prefWidth="88.0" text="Poids Total" />
+                <TableColumn fx:id="dateFactureColumn" prefWidth="110.0" text="Date Facture" />
             </columns>
         </TableView>
-          <Button layoutX="445.0" layoutY="339.0" onAction="#generateBonneDeLivraison" prefHeight="23.0" prefWidth="83.0" text="Generate Bonne de Livraison" />
+          <Button layoutX="439.0" layoutY="339.0" onAction="#generateBonneDeLivraison" prefHeight="30.0" prefWidth="95.0" styleClass="modifier-btn" text="Generate Bon" />
     </children>
 </AnchorPane>

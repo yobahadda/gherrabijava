@@ -1,7 +1,6 @@
 package com.ayoub.gherabijava;
 
 import com.ayoub.gherabijava.models.*;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,7 +16,6 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -26,7 +24,7 @@ import java.util.ResourceBundle;
 public class ClientController implements Initializable {
     final String url = "jdbc:mysql://localhost:3306/projet_java";
     private File selectedFile;
-    final String password = "";
+    final String password = "S8!hos@samQl";
     final String user = "root";
     private ObservableList<Client> clients = FXCollections.observableArrayList();
     private FilteredList<Client> filteredClients;
@@ -62,7 +60,7 @@ public class ClientController implements Initializable {
     private Connection getConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/projet_java";
         String user = "root";
-        String password = "";
+        String password = "S8!hos@samQl";
         return DriverManager.getConnection(url, user, password);
     }
     public void insertClient(Client client, File imageFile) {

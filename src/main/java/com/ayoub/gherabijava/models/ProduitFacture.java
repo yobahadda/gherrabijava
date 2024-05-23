@@ -6,24 +6,24 @@ public class ProduitFacture {
     float montant;
     int commandeID;
     int produitID;
-    float weight;
-    public float getWeight() {
-        return weight;
+    float poids;
+    public float getPoids() {
+        return poids;
     }
 
-    public void setWeight(float weight) {
-        this.weight = weight;
+    public void setPoids(float poids) {
+        this.poids = poids;
     }
     public ProduitFacture(String nom, int quantite, float montant) {
         this.nom = nom;
         this.quantite = quantite;
         this.montant = montant;
     }
-    public ProduitFacture(String nom, int quantite, float montant, float weight) {
+    public ProduitFacture(String nom, int quantite, float montant, float poids) {
         this.nom = nom;
         this.quantite = quantite;
         this.montant = montant;
-        this.weight = weight; // Initialize weight
+        this.poids = poids; // Initialize poids
     }
 
     public String getNom() {

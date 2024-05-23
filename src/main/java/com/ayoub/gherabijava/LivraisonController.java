@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class LivraisonController implements Initializable {
     final String url = "jdbc:mysql://localhost:3306/projet_java";
-    final String password = "";
+    final String password = "S8!hos@samQl";
     final String user = "root";
     private ObservableList<Facture> factures = FXCollections.observableArrayList();
     private ArrayList<Integer> commandesId = new ArrayList<>();
