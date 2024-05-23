@@ -128,13 +128,13 @@ public class CommandeController implements Initializable {
                 } else {
                     System.out.println("CommandeID does not exist in the commandes table.");
                 }
-
-                // Clear the produitsTable
                 produitCommande.clear();
                 produitsTable.refresh();
-                commandesTable.refresh();
+                commandes.clear();
+                getCommandesFromDb();
 
             } catch (SQLException e) {
+                showAlert("insertion error","les produits sont deja insérés!");
                 e.printStackTrace();
             }
         } else {
@@ -456,6 +456,14 @@ public class CommandeController implements Initializable {
             e.printStackTrace();
         }
         return nomComplet;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private String handleDialogBox(String headerText){
