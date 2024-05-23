@@ -52,7 +52,7 @@ public class CamionCard {
         } else if (poids >= poidsTotal - 10 && poids <= poidsTotal) {
             return "/com/ayoub/gherabijava/images/gray.jpg";
         }
-        return "/com/ayoub/gherabijava/images/red.jpg"; // Ensure this file exists
+        return ""; // Ensure this file exists
     }
 
     private void handleCardClick(MouseEvent event) {

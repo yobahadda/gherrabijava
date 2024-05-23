@@ -3,7 +3,6 @@ package com.ayoub.gherabijava;
 import com.ayoub.gherabijava.models.Camion;
 import com.ayoub.gherabijava.models.Commandes;
 import com.ayoub.gherabijava.models.Facture;
-import com.ayoub.gherabijava.models.Produit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -75,6 +74,9 @@ public class LivraisonController implements Initializable {
             statement.setString(3, "livré");
             statement.setInt(4, selectedCaId);
             statement.executeUpdate();
+            //changer poids courant du camion selectionne
+            //changer le statut de la commande
+            factureTable.refresh();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -164,7 +166,7 @@ public class LivraisonController implements Initializable {
     }
 
     private void getCommandesFromDb(){
-        String sql = "select * from commandes where Statut = 'ready' and ClientID = " + clientId;
+        String sql = "select * from commandes where Statut = 'pret' and ClientID = " + clientId;
         int commandeId;
         try{
             PreparedStatement statement = getDataBaseResponse(sql);
@@ -180,14 +182,17 @@ public class LivraisonController implements Initializable {
 
     private void getFacturesFromDb(){
         String baseSql = "select * from factures where CommandeID = ";
+        String sql;
+        PreparedStatement statement;
+        ResultSet response;
         float montantTotal;
         float poidsTotal;
         Date date;
         for(int commandeId : commandesId){
-            String sql = baseSql + commandeId;
+            sql = baseSql + commandeId;
             try{
-                PreparedStatement statement = getDataBaseResponse(sql);
-                ResultSet response = statement.executeQuery();
+                statement = getDataBaseResponse(sql);
+                response = statement.executeQuery();
                 while (response.next()) {
                     montantTotal = Float.valueOf(response.getString("montantTotal"));
                     date = Date.valueOf(response.getString("DateFacture"));
