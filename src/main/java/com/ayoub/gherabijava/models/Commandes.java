@@ -8,6 +8,7 @@ public class Commandes {
     private int clientID;
     private String statut;
     private List<Lignecommande> ligneCommandes;
+
     public float getTotalWeight() {
         float totalWeight = 0.0f;
         for (Lignecommande ligne : ligneCommandes) {
@@ -15,6 +16,7 @@ public class Commandes {
         }
         return totalWeight;
     }
+
     public Commandes(Date dateCommande, int clientID, String statut) {
         this.dateCommande = dateCommande;
         this.clientID = clientID;
@@ -31,9 +33,10 @@ public class Commandes {
         this.dateCommande = dateCommande;
         this.statut = statut;
     }
-    public void updateStatus(String newStatus) {
+
+    public void updateStatus(String newStatus, String password) {
         String sql = "UPDATE commandes SET Statut = ? WHERE CommandeID = ?";
-        try (Connection connection = getConnection();
+        try (Connection connection = getConnection(password);
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, newStatus);
             statement.setInt(2, this.commandeID);
@@ -79,16 +82,15 @@ public class Commandes {
         this.statut = statut;
     }
 
-    private static Connection getConnection() throws SQLException {
+    private static Connection getConnection(String password) throws SQLException {
         String url = "jdbc:mysql://localhost:3306/projet_java";
         String user = "root";
-        String password = "";
         return DriverManager.getConnection(url, user, password);
     }
 
-    public static Commandes getCommandeById(int commandeId) throws SQLException {
+    public static Commandes getCommandeById(int commandeId, String password) throws SQLException {
         Commandes commande = null;
-        try (Connection connection = getConnection()) {
+        try (Connection connection = getConnection(password)) {
             String sql = "SELECT * FROM commandes WHERE CommandeID = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, commandeId);
@@ -104,14 +106,16 @@ public class Commandes {
         }
         return commande;
     }
-    public int insertCommande(int clientId) {
-        String insertCommandeSql = "INSERT INTO commandes (ClientID, DateCommande) VALUES (?, ?)";
+
+    public int insertCommande(int clientId, String password) {
+        String insertCommandeSql = "INSERT INTO commandes (ClientID, DateCommande, Statut) VALUES (?, ?, ?)";
         int generatedCommandeId = 0;
-        try (Connection connection = getConnection();
+        try (Connection connection = getConnection(password);
              PreparedStatement insertCommandeStmt = connection.prepareStatement(insertCommandeSql, Statement.RETURN_GENERATED_KEYS)) {
             // Set the ClientID and DateCommande in the prepared statement
             insertCommandeStmt.setInt(1, clientId);
             insertCommandeStmt.setDate(2, this.getDateCommande());
+            insertCommandeStmt.setString(3, this.getStatut());
 
             int rowsAffected = insertCommandeStmt.executeUpdate();
 
@@ -134,8 +138,8 @@ public class Commandes {
         return generatedCommandeId;
     }
 
-    public void deleteCommande() throws SQLException {
-        try (Connection connection = getConnection()) {
+    public void deleteCommande(String password) throws SQLException {
+        try (Connection connection = getConnection(password)) {
             String sql = "DELETE FROM commandes WHERE CommandeID = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, this.commandeID);

@@ -64,7 +64,7 @@ public class AdminController implements Initializable {
     }
     private boolean verifyLogin(String username, String password) {
         boolean isValid = false;
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_java", "root", "")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_java", "root", "S8!hos@samQl")) {
             String query = "SELECT * FROM admin WHERE username =? AND password =?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);

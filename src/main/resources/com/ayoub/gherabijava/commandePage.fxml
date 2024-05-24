@@ -72,15 +72,15 @@
         <columns>
           <TableColumn fx:id="nomProduitColumn" prefWidth="104.0" text="Nom" />
             <TableColumn fx:id="quantiteColumn" prefWidth="68.0" text="Quantité" />
-          <TableColumn fx:id="montantColumn" prefWidth="82.66668701171875" text="Montant" />
+          <TableColumn fx:id="montantColumn" prefWidth="88.6666259765625" text="Montant" />
         </columns>
       </TableView>
-      <ScrollPane fx:id="scrollProduits" hbarPolicy="NEVER" layoutX="325.0" layoutY="105.0" prefHeight="369.0" prefWidth="331.0">
+      <ScrollPane fx:id="scrollProduits" hbarPolicy="NEVER" layoutX="320.0" layoutY="105.0" prefHeight="369.0" prefWidth="341.0">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
          <content>
-            <GridPane fx:id="gridProduits" hgap="10.0" prefHeight="0.0" prefWidth="0.0" vgap="10.0">
+            <GridPane fx:id="gridProduits" hgap="9.0" prefHeight="0.0" prefWidth="0.0" vgap="9.0">
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>

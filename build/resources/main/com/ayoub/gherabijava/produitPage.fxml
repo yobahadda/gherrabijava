@@ -28,14 +28,14 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <TableView fx:id="produitsTable" layoutX="14.0" layoutY="102.0" prefHeight="369.0" prefWidth="663.0">
+      <TableView fx:id="produitsTable" layoutX="14.0" layoutY="102.0" prefHeight="369.0" prefWidth="656.0">
          <columns>
-            <TableColumn fx:id="nomColumn" prefWidth="119.19997882843018" text="Nom" />
-            <TableColumn fx:id="descColumn" prefWidth="152.00001525878906" text="Description" />
-            <TableColumn fx:id="prixColumn" prefWidth="124.800048828125" text="Prix" />
-            <TableColumn fx:id="imageColumn" prefWidth="119.199951171875" text="Image" />
-            <TableColumn fx:id="poidsColumn" prefWidth="136.0" text="Poids" />
-            <TableColumn fx:id="quantiteColumn" prefWidth="136.0" text="Quantite" />
+            <TableColumn fx:id="nomColumn" prefWidth="115.33334636688232" text="Nom" />
+            <TableColumn fx:id="descColumn" prefWidth="151.3333282470703" text="Description" />
+            <TableColumn fx:id="prixColumn" prefWidth="88.6666259765625" text="Prix" />
+            <TableColumn fx:id="imageColumn" prefWidth="120.6666259765625" text="Image" />
+            <TableColumn fx:id="poidsColumn" prefWidth="86.66659545898438" text="Poids" />
+            <TableColumn fx:id="quantiteColumn" prefWidth="82.66668701171875" text="Quantite" />
 
          </columns>
       </TableView>
@@ -70,7 +70,7 @@
             </Button>
          </children>
       </HBox>
-      <VBox alignment="CENTER_LEFT" layoutX="677.0" layoutY="8.0" prefHeight="0.0" prefWidth="266.0" spacing="10.0">
+      <VBox alignment="CENTER_LEFT" layoutX="676.0" layoutY="94.0" prefHeight="0.0" prefWidth="266.0" spacing="10.0">
          <children>
             <Label text="Nom Du Produit:" />
             <TextField fx:id="nomField" prefHeight="30.0" prefWidth="223.0" styleClass="search-bar" />
@@ -82,8 +82,12 @@
             <TextField fx:id="poidsField" prefHeight="30.0" styleClass="search-bar" />
             <Label text="Quantité en stock:" />
             <TextField fx:id="quantiteField" prefHeight="30.0" styleClass="search-bar" />
-            <Button onAction="#chooseImage" text="Choose Image" />
-            <ImageView fx:id="imagePreview" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button onAction="#chooseImage" text="Choose Image" />
+                  <ImageView fx:id="imagePreview" fitHeight="89.0" fitWidth="91.0" preserveRatio="true" />
+               </children>
+            </HBox>
 
          </children>
          <padding>

@@ -16,9 +16,10 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 public class FactureController implements Initializable {
     final String url = "jdbc:mysql://localhost:3306/projet_java";
-    final String password = "";
+    final String password = "S8!hos@samQl";
     final String user = "root";
     private int clientId;
     private Client selectedClient;
@@ -37,6 +38,9 @@ public class FactureController implements Initializable {
 
     @FXML
     private TableColumn<Facture, Float> totalColumn;
+
+    @FXML
+    private TableColumn<Facture, Float> poidsColumn;
 
     @FXML
     private TableColumn<Facture, Date> dateFactureColumn;
@@ -77,11 +81,11 @@ public class FactureController implements Initializable {
             return;
         }
 
-        Commandes selectedCommande = Commandes.getCommandeById(selectedFacture.getCommandeID());
+        Commandes selectedCommande = Commandes.getCommandeById(selectedFacture.getCommandeID(),password);
         Client client = getClientById(selectedCommande.getClientID());
 
         // Calculate total weight
-        float totalWeight = produitFactures.stream().map(p -> p.getWeight() * p.getQuantite()).reduce(0.0f, Float::sum);
+        float totalWeight = produitFactures.stream().map(p -> p.getPoids() * p.getQuantite()).reduce(0.0f, Float::sum);
 
         // Generate the "bonne de livraison"
         StringBuilder bonneDeLivraison = new StringBuilder();
@@ -103,7 +107,7 @@ public class FactureController implements Initializable {
             bonneDeLivraison.append("Produit: ").append(produit.getNom()).append("\n");
             bonneDeLivraison.append("Quantite: ").append(produit.getQuantite()).append("\n");
             bonneDeLivraison.append("Montant: ").append(produit.getMontant()).append("\n");
-            bonneDeLivraison.append("Weight: ").append(produit.getWeight()).append(" kg\n\n");
+            bonneDeLivraison.append("Weight: ").append(produit.getPoids()).append(" kg\n\n");
         }
 
         // Update the UI to display the "bonne de livraison"
@@ -126,6 +130,19 @@ public class FactureController implements Initializable {
             System.out.println(selectedFacture.getMontantTotal());
         } else {
             showAlert("No Facture Selected", "Please select a facture to generate the PDF file.");
+        }
+    }
+
+    @FXML
+    private void selectionnerCommande() {
+        Commandes selectedCommande = commandesTable.getSelectionModel().getSelectedItem();
+        if (selectedCommande != null) {
+            int commandeId = selectedCommande.getCommandeID();
+            getProduitsCommande(commandeId);
+            showProduitFactures();
+            showFacture(commandeId);
+        } else {
+            System.out.println("No item selected in commandesTable");
         }
     }
 
@@ -156,6 +173,7 @@ public class FactureController implements Initializable {
         setupFactureTable();
 
     }
+
     public void insertFacture(Facture facture) {
         String sql = "INSERT INTO factures (commandeId, montantTotal, dateFacture, poidsTotal) VALUES (?, ?, ?, ?)";
 
@@ -171,6 +189,7 @@ public class FactureController implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void setupFactureTable() {
         comFactureColumn.setCellValueFactory(new PropertyValueFactory<>("commandeID"));
         dateFactureColumn.setCellValueFactory(new PropertyValueFactory<>("dateFacture"));
@@ -229,19 +248,6 @@ public class FactureController implements Initializable {
         }
     }
 
-    @FXML
-    private void selectionnerCommande() {
-        Commandes selectedCommande = commandesTable.getSelectionModel().getSelectedItem();
-        if (selectedCommande != null) {
-            int commandeId = selectedCommande.getCommandeID();
-            getProduitsCommande(commandeId);
-            showProduitFactures();
-            showFacture(commandeId);
-        } else {
-            System.out.println("No item selected in commandesTable");
-        }
-    }
-
     private void getCommandesFromDb() {
         String sql = "SELECT * FROM commandes WHERE ClientID = ?";
         try (Connection connection = DriverManager.getConnection(url, user, password);
@@ -285,11 +291,14 @@ public class FactureController implements Initializable {
         textInputDialog.setHeaderText(headerText);
         textInputDialog.getDialogPane().setContentText("Entrez L'Email Du Client:");
         Optional<String> response = textInputDialog.showAndWait();
-        String input = response.orElse("").trim();
-        if (input.isEmpty()) {
-            return handleDialogBox("invalid input value");
+        String input = "";
+        if(response.isPresent()) {
+            input = response.get();
+            if (input.trim().isEmpty()) {
+                input = handleDialogBox("invalid input value");
+            }
         }
-        return input;
+        return input.trim();
     }
 
     private void getFacture(int commandeId) {
@@ -303,6 +312,7 @@ public class FactureController implements Initializable {
         comFactureColumn.setCellValueFactory(new PropertyValueFactory<>("commandeID"));
         dateFactureColumn.setCellValueFactory(new PropertyValueFactory<>("dateFacture"));
         totalColumn.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
+        poidsColumn.setCellValueFactory(new PropertyValueFactory<>("poidsTotal"));
         factureTable.setItems(factures);
     }
 

@@ -113,5 +113,10 @@
     -fx-text-fill: #D20062;
 }
 
+.confirm-btn{
+    -fx-background-color: #07d17a;
+}
 
-
+.confirm-btn:hover{
+    -fx-background-color: #12f893;
+}
